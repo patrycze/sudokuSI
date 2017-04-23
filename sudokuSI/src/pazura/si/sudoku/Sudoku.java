@@ -1,6 +1,7 @@
 package pazura.si.sudoku;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import sac.graph.BestFirstSearch;
@@ -48,6 +49,7 @@ public class Sudoku extends GraphStateImpl {
 	}
 
 	public static void main(String[] arg) {
+		
 		Sudoku obj = new Sudoku();
 
 		//String SudokuAsString = "003020600900305001001806400008102900700000008006708200002609500800203009005010300";
@@ -74,34 +76,57 @@ public class Sudoku extends GraphStateImpl {
 		System.out.println("Open: " + a.getOpenSet().size());
 		System.out.println("Solution: " + a.getSolutions().size());
 		
+		
+		
+		
+
+		
+		
 	}
 	
 	
 
 	@Override
 	public int hashCode() {
-		return toString().hashCode();
+		int k = 0;
+		byte[] linear = new byte[n2*n2];
+		for(int i =0; i<n2; i++)
+		{
+			for(int j=0; j<n2; j++)
+			{
+				linear[k++] = board[i][j];
+			}
+		}
+		
+		return Arrays.hashCode(linear);
+		//return toString().hashCode();
 	}
 
 	@Override
 	public String toString() {
-		String result = "";
+		//String result = "";
+		StringBuilder result = new StringBuilder();
 		int x = 1, y = 1;
 
 		for (int i = 0; i < n2; i++) {
 			for (int j = 0; j < n2; j++) {
-				result += board[i][j] + " ";
+				result.append(board[i][j]);
+				result.append(" ");
+				//result += board[i][j] + " ";
 				if (x % n == 0)
-					result += "  ";
+					result.append(" ");
+					//result += "  ";
 				x++;
 			}
 			if (y % n == 0)
-				result += "\n";
+				result.append("\n");
+				//result += "\n";
 			y++;
-			result += "\n";
+			result.append("\n");
+			//result += "\n";
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	public void FromString(String txt) {
@@ -199,3 +224,32 @@ public class Sudoku extends GraphStateImpl {
 	}
 
 }
+
+/* zmienna n 
+	tablica 2wymiarowa jako plansza byte[][] 
+	konstruktor genruje plansze rozwiazana
+	konstruktor kopiujacy
+	
+	 mieszanie planszy 
+	 fumkcja mieszajaca z parametrem liczby ruchow -> losowe ruchy = mieszanie
+	 uzyc klasy java.util.random
+	 private static Random rand = new Random(); // wymuszanie tego samego Random(123)
+	 rand.nextInt();
+	 metoda wykonujaca pojedynczy ruch ^ < > 
+	 metoda toString czyli StringBuilder 
+	 metoda hashCode 
+	 trzymaæ wspólrzedne klocka zera 
+	 generowanie potomkow
+	 nazywanie potomkow 
+	 child.setMoveName("Up""Down"...)
+	 funkcje heurystyczne = missplaced types, manhatan
+	 wyswietlanie sciezek i ich kosztow:
+	 metoda isSolution przy GenerateChildren
+	 solution.getG() zwraca sciezke  // zwraca doubla 
+	 solution.getPath list graphStatow List<GraphState>
+	 solution.getMovesAlogPath() -> Lista stringow
+	 co to zbior open 
+	 co to manhatan 
+	 struktury danych zwiazane z algorytmami 
+	 
+*/
